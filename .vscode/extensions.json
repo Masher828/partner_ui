@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+      "dbaeumer.vscode-eslint",     // ESLint
+      "esbenp.prettier-vscode",     // Prettier
+      "chakra-ui.vscode",           // Chakra UI intellisense (optional if using Chakra)
+      "streetsidesoftware.code-spell-checker" // Spelling checker (optional)
+    ]
+  }
