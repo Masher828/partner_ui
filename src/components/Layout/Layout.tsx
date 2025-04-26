@@ -1,7 +1,9 @@
 import React, { ReactNode } from 'react';
 import Navbar from '../Navbar';
-import Footer from '../Footer';
 import { ChakraProvider } from '@chakra-ui/react';
+import Footer from '../Footer';
+import AuthModal from '../AuthModal';
+import { SessionProvider } from 'next-auth/react';
 
 interface Props {
   children: ReactNode;
@@ -12,12 +14,14 @@ interface Props {
 const Layout = ({ children, hideNavbar = false, hideFooter = false }: Props) => {
   return (
     <div>
-      <ChakraProvider>
-        {!hideNavbar ? <Navbar /> : null}
-        <div style={{ minHeight: 'calc(100vh - 200px)' }}>{children}</div>
-
-        {!hideFooter ? <Footer /> : null}
-      </ChakraProvider>
+      <SessionProvider refetchOnWindowFocus={false}>
+        <ChakraProvider>
+          {!hideNavbar ? <Navbar /> : null}
+          <div style={{ padding: '20px', minHeight: 'calc(100vh - 200px)' }}>{children}</div>
+          {!hideFooter ? <Footer /> : null}
+          <AuthModal />
+        </ChakraProvider>
+      </SessionProvider>
     </div>
   );
 };
