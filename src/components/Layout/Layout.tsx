@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
 import Navbar from '../Navbar';
-import Footer from '../Footer';
 import { ChakraProvider } from '@chakra-ui/react';
+import Footer from '../Footer';
+import AuthModal from '../AuthModal';
 
 interface Props {
   children: ReactNode;
@@ -14,9 +15,9 @@ const Layout = ({ children, hideNavbar = false, hideFooter = false }: Props) => 
     <div>
       <ChakraProvider>
         {!hideNavbar ? <Navbar /> : null}
-        <div style={{ minHeight: 'calc(100vh - 200px)' }}>{children}</div>
-
+        {children}
         {!hideFooter ? <Footer /> : null}
+        <AuthModal />
       </ChakraProvider>
     </div>
   );
