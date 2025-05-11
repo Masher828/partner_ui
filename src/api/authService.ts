@@ -2,7 +2,7 @@ import { SignUpProps } from '@/types/sign-up-type';
 import axios from './apiClient';
 
 export const signUpUser = async (signUpData: SignUpProps) => {
-  const { data } = await axios.post('/signup', signUpData);
+  const { data } = await axios.post('/auth/signup', signUpData);
   return data;
 };
 

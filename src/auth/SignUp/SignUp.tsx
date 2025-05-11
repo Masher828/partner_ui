@@ -20,36 +20,25 @@ const initialValues = {
 
 const fieldConfigs: FieldConfig[] = [
   {
-    name: 'firstName',
-    label: 'First Name',
+    name: 'name',
+    label: 'Full Name',
     type: 'text',
     validation: yup
       .string()
-      .required('Please enter your first name. This field cannot be left empty.')
-      .min(2, 'First name is too short. It should be at least 2 characters long.')
-      .max(50, 'First name is too long. It should be no more than 50 characters.'),
-    placeholder: 'John',
+      .required('Please enter your full name. This field cannot be left empty.')
+      .min(2, 'Name is too short. It should be at least 2 characters long.')
+      .max(50, 'Name is too long. It should be no more than 50 characters.'),
+    placeholder: 'John Doe',
   },
   {
-    name: 'lastName',
-    label: 'Last Name',
-    type: 'text',
-    validation: yup
-      .string()
-      .required('Please enter your last name. This field cannot be left empty.')
-      .min(2, 'Last name is too short. It should be at least 2 characters long.')
-      .max(50, 'Last name is too long. It should be no more than 50 characters.'),
-    placeholder: 'Doe',
-  },
-  {
-    name: 'emailId',
+    name: 'email',
     label: 'Email',
     type: 'email',
     validation: commonSchemas.email,
     placeholder: 'e.g., example@domain.com',
   },
   {
-    name: 'phone',
+    name: 'mobile',
     label: 'Phone',
     type: 'tel',
     validation: commonSchemas.phone,
@@ -98,7 +87,7 @@ const SignUp = ({ isModal, onSignUpSuccess }: SignUpComponentProps) => {
     onSuccess: (_, variables) => {
       if (onSignUpSuccess) {
         signIn('credentials', {
-          email: variables.emailId,
+          email: variables.email,
           password: variables.password,
           redirect: false,
         }).then((data) => {
@@ -127,7 +116,7 @@ const SignUp = ({ isModal, onSignUpSuccess }: SignUpComponentProps) => {
           router.push('/auth/login');
         } else {
           signIn('credentials', {
-            email: variables.emailId,
+            email: variables.email,
             password: variables.password,
             redirect: false,
           }).then((data) => {
@@ -164,11 +153,13 @@ const SignUp = ({ isModal, onSignUpSuccess }: SignUpComponentProps) => {
   const handleSubmit = async (data: SignUpProps) => {
     setIsLoading(true);
     const resData = {
-      firstName: data?.firstName,
-      lastName: data?.lastName,
-      emailId: data?.emailId,
-      phone: data?.phone,
+      name: data?.name,
+      user_name: data?.user_name,
+      email: data?.email,
+      mobile: data?.mobile,
+      mobile_code: data?.mobile_code,
       password: data?.password,
+      dob: data?.dob,
     };
     await mutation.mutate(resData);
   };
