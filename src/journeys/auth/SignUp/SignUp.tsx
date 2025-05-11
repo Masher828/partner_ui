@@ -1,6 +1,6 @@
 import DynamicForm from '@/dynamicForms';
 import { FieldConfig, commonSchemas } from '@/dynamicForms/DynamicForm';
-import { Flex, Heading, Stack, Image, useToast, Divider, Text } from '@chakra-ui/react';
+import { Flex, Heading, Stack, useToast, Divider, Text } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import * as yup from 'yup';
 import { SignUpProps } from '@/types/sign-up-type';
@@ -20,36 +20,36 @@ const initialValues = {
 
 const fieldConfigs: FieldConfig[] = [
   {
-    name: 'firstName',
-    label: 'First Name',
+    name: 'user_name',
+    label: 'Username',
     type: 'text',
     validation: yup
       .string()
-      .required('Please enter your first name. This field cannot be left empty.')
-      .min(2, 'First name is too short. It should be at least 2 characters long.')
+      .required('Please enter unique username. This field cannot be left empty.')
+      .min(5, 'First name is too short. It should be at least 5 characters long.')
       .max(50, 'First name is too long. It should be no more than 50 characters.'),
-    placeholder: 'John',
+    placeholder: 'John Doe',
   },
   {
-    name: 'lastName',
-    label: 'Last Name',
+    name: 'name',
+    label: 'Full Name',
     type: 'text',
     validation: yup
       .string()
-      .required('Please enter your last name. This field cannot be left empty.')
-      .min(2, 'Last name is too short. It should be at least 2 characters long.')
-      .max(50, 'Last name is too long. It should be no more than 50 characters.'),
-    placeholder: 'Doe',
+      .required('Please enter your full name. This field cannot be left empty.')
+      .min(2, 'Name is too short. It should be at least 2 characters long.')
+      .max(50, 'Name is too long. It should be no more than 50 characters.'),
+    placeholder: 'John Doe',
   },
   {
-    name: 'emailId',
+    name: 'email',
     label: 'Email',
     type: 'email',
     validation: commonSchemas.email,
-    placeholder: 'e.g., example@domain.com',
+    placeholder: 'e.g., john@doe.com',
   },
   {
-    name: 'phone',
+    name: 'mobile',
     label: 'Phone',
     type: 'tel',
     validation: commonSchemas.phone,
@@ -98,7 +98,7 @@ const SignUp = ({ isModal, onSignUpSuccess }: SignUpComponentProps) => {
     onSuccess: (_, variables) => {
       if (onSignUpSuccess) {
         signIn('credentials', {
-          email: variables.emailId,
+          email: variables.email,
           password: variables.password,
           redirect: false,
         }).then((data) => {
@@ -127,7 +127,7 @@ const SignUp = ({ isModal, onSignUpSuccess }: SignUpComponentProps) => {
           router.push('/auth/login');
         } else {
           signIn('credentials', {
-            email: variables.emailId,
+            email: variables.email,
             password: variables.password,
             redirect: false,
           }).then((data) => {
@@ -164,20 +164,22 @@ const SignUp = ({ isModal, onSignUpSuccess }: SignUpComponentProps) => {
   const handleSubmit = async (data: SignUpProps) => {
     setIsLoading(true);
     const resData = {
-      firstName: data?.firstName,
-      lastName: data?.lastName,
-      emailId: data?.emailId,
-      phone: data?.phone,
+      name: data?.name,
+      user_name: data?.user_name,
+      email: data?.email,
+      mobile: data?.mobile,
       password: data?.password,
+      mobile_code: data?.mobile_code,
+      dob: data?.dob,
     };
     await mutation.mutate(resData);
   };
   return (
     <>
       <Stack minH={'70vh'} p={isModal ? 0 : 5} direction={{ base: 'column', md: 'row' }}>
-        <Flex p={isModal ? 0 : 8} flex={1} align={'center'} justify={'center'}>
+        <Flex flex={1} align={'center'} justify={'center'} boxShadow={'2xl'}p={8} borderRadius='lg'>
           <Stack spacing={4} w={'full'} maxW={'md'}>
-            {!isModal && <Heading fontSize={'2xl'}>Sign up </Heading>}
+          <Heading fontSize={'2xl'} >Sign up </Heading>
             <DynamicForm
               onSubmit={handleSubmit}
               fields={fieldConfigs}
@@ -206,18 +208,6 @@ const SignUp = ({ isModal, onSignUpSuccess }: SignUpComponentProps) => {
             </Text>
           </Stack>
         </Flex>
-        {!isModal && (
-          <Flex flex={1} pb={4}>
-            <Image
-              alt={'Login Image'}
-              objectFit={'cover'}
-              borderRadius='lg'
-              src={
-                'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80'
-              }
-            />
-          </Flex>
-        )}
       </Stack>
     </>
   );

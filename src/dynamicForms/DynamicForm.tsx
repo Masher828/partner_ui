@@ -181,7 +181,7 @@ const DynamicForm = React.forwardRef<DynamicFormHandles, FormProps>(
                   onChange={(e) => handleChange(field, e.target.value)}
                   isDisabled={isFieldDisabled}
                   isReadOnly={isViewOnly}
-                  variant={isViewOnly ? 'flushed' : null}
+                  variant={isViewOnly ? 'flushed' : 'outline'}
                 />
               </InputGroup>
               <FormErrorMessage>{errors[name]?.message}</FormErrorMessage>
@@ -192,7 +192,7 @@ const DynamicForm = React.forwardRef<DynamicFormHandles, FormProps>(
             <FormControl pt={FIELDS_PADDING} key={name} isInvalid={!!errors[name]}>
               <FormLabel htmlFor={name}>{labelWithAsterisk}</FormLabel>
               <InputGroup>
-                {icon && <InputLeftElement>{icon}</InputLeftElement>}
+                {icon && <InputLeftElement>{renderIcon(icon)}</InputLeftElement>}
                 <Input
                   {...register(name)}
                   id={name}

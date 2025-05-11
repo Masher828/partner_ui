@@ -2,7 +2,7 @@ import useAuthModalStore from '@/zustand/authModalStore';
 import axios from 'axios';
 import { getSession, signOut } from 'next-auth/react';
 
-const baseURL = process.env.NEXT_PUBLIC_API_BASEURL;
+const baseURL = "http://localhost:3033";
 
 let cachedSession: any = null; // Cache session in memory
 
